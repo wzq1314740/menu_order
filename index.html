@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#12291F">
+<link rel="icon" href="images/emblem-gold.png">
+<link rel="apple-touch-icon" href="images/emblem-gold.png">
+<title>桂亭 Laurel Garden · 点餐</title>
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/order.css">
+</head>
+<body class="order-page">
+
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand">
+      <img class="logo" src="images/emblem-cream.png" alt="桂亭">
+      <h1 id="brandName">桂亭</h1>
+      <div class="en" id="brandEn">Laurel Garden</div>
+      <div class="sub" id="brandSub">臻品粤菜府</div>
+      <div class="rule"></div>
+    </div>
+    <nav class="nav" id="nav"></nav>
+    <div class="side-foot">
+      <button class="mine-link" data-open-mine>本桌已点</button>
+      <button class="cart-btn" data-open-cart>
+        <span class="txt">
+          <span class="t1">预选清单</span>
+          <span class="t2" data-cart-sub>尚未选菜</span>
+        </span>
+        <span class="badge" data-cart-badge>0</span>
+      </button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <button class="table-chip" id="tableChip" aria-label="切换包厢或桌号">
+        <span class="lb">桌号</span><b id="tableName">请选择</b><span class="sw">切换</span>
+      </button>
+      <div class="titles">
+        <div class="rm" id="roomName">包厢预选菜单</div>
+        <div class="dt" id="storeName">桂亭</div>
+      </div>
+      <div class="note"><i></i><span id="noteText">本菜单仅作预选，最终以服务员确认为准</span></div>
+      <div class="search" id="searchBox">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+        <input id="searchInput" type="search" enterkeyhint="search" placeholder="搜菜名 / 拼音" autocomplete="off" autocapitalize="none" spellcheck="false">
+        <button class="clr" id="searchClr" aria-label="清空搜索">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 5l14 14M19 5L5 19"/></svg>
+        </button>
+        <div class="search-pop" id="searchPop" role="listbox"></div>
+      </div>
+    </header>
+    <nav class="cat-tabs" id="catTabs"></nav>
+    <div class="scroll" id="scroll">
+      <div class="loading" id="loading">菜单载入中…</div>
+    </div>
+  </main>
+</div>
+
+<!-- 手机竖屏底部购物车条 -->
+<div class="cartbar">
+  <button class="cb-mine" data-open-mine>本桌已点</button>
+  <button class="cb-main" data-open-cart>
+    <span class="badge" data-cart-badge>0</span>
+    <span class="cb-t" data-cart-sub>尚未选菜</span>
+    <b>查看清单</b>
+  </button>
+</div>
+
+<div class="veil"></div>
+
+<!-- 预选清单 -->
+<aside class="drawer" id="drawer" aria-hidden="true">
+  <div class="drawer-head">
+    <div>
+      <h3>预选清单</h3>
+      <div class="sub" id="drawerSub">尚未选菜</div>
+    </div>
+    <button class="txt-btn" id="clearCart">清空</button>
+    <button class="icon-btn" id="drawerClose" aria-label="关闭">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M5 5l14 14M19 5L5 19"/></svg>
+    </button>
+  </div>
+  <div class="drawer-body" id="drawerBody"></div>
+  <div class="drawer-foot">
+    <div class="sum"><b id="sumText">共 0 道</b><button class="txt-btn" data-open-mine>本桌已点</button></div>
+    <button class="btn-solid" id="confirmBtn" disabled>确认清单</button>
+  </div>
+</aside>
+
+<!-- 菜品详情 -->
+<div class="modal-wrap" id="dishModal" aria-hidden="true">
+  <div class="modal dish-modal" id="dishBox"></div>
+</div>
+
+<!-- 做法选择（一菜多做） -->
+<div class="modal-wrap" id="cookModal" aria-hidden="true">
+  <div class="modal cook-modal">
+    <button class="cook-close" id="cookClose" aria-label="关闭做法选择">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M5 5l14 14M19 5L5 19"/></svg>
+    </button>
+    <div class="cook-head">
+      <h3 id="cookTitle">菜品</h3>
+      <div class="sub">选择做法后点 ＋ 加入，可多选</div>
+    </div>
+    <div class="cook-list" id="cookList"></div>
+    <div class="cook-foot"><button class="btn-ghost" id="cookDone">完成</button></div>
+  </div>
+</div>
+
+<!-- 确认并提交 -->
+<div class="modal-wrap" id="sheetModal" aria-hidden="true">
+  <div class="modal sheet" id="sheetBox"></div>
+</div>
+
+<!-- 本桌已点 -->
+<div class="modal-wrap" id="mineModal" aria-hidden="true">
+  <div class="modal sheet" id="mineBox"></div>
+</div>
+
+<!-- 选择包厢 / 桌号 -->
+<div class="table-page" id="tablePage" hidden>
+  <div class="tp-inner">
+    <button class="tp-close" id="tableClose" aria-label="关闭" hidden>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M5 5l14 14M19 5L5 19"/></svg>
+    </button>
+    <img class="tp-logo" src="images/emblem-cream.png" alt="">
+    <h1 id="tpBrand">桂亭</h1>
+    <div class="tp-en" id="tpBrandEn">Laurel Garden</div>
+    <div class="tp-title">请选择包厢或桌号</div>
+    <div id="tableList"></div>
+  </div>
+</div>
+
+<script src="pinyin-dict.js"></script>
+<script type="module" src="js/order/app.js"></script>
+</body>
+</html>

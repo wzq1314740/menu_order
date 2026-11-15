@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#12291F">
+<link rel="icon" href="images/emblem-gold.png">
+<title>菜单管理 · 桂亭</title>
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+
+<header class="top">
+  <img src="images/emblem-cream.png" alt="">
+  <div class="ttl-box">
+    <div class="ttl">菜单管理</div>
+    <div class="sub">Laurel Garden · Menu Editor</div>
+  </div>
+  <div class="sp"></div>
+  <span class="saving" id="saving" hidden>保存中…</span>
+  <a class="tbtn" href="/" target="_blank">点餐页</a>
+  <a class="tbtn" href="/orders.html">订单看板</a>
+  <button class="tbtn solid" id="settingsBtn">门店设置</button>
+  <button class="tbtn" id="logoutBtn">退出</button>
+</header>
+
+<div class="wrap">
+  <aside class="side" id="catList"></aside>
+  <main class="main">
+    <div class="tip" id="tip">
+      <p><b>修改即时生效：</b>每次保存都会立即同步到所有点餐设备，点餐页重新打开或刷新后显示新菜单。每次保存前会自动备份上一版，可在「备份与恢复」中找回。</p>
+      <button class="x" id="tipClose" aria-label="关闭">×</button>
+    </div>
+
+    <div class="bar">
+      <h2 id="catTitle">全部菜品</h2>
+      <span class="cnt" id="catCount"></span>
+      <div class="sp"></div>
+      <div class="more">
+        <button class="btn" id="backupBtn">备份与恢复</button>
+        <button class="btn" id="exportBtn">导出</button>
+        <button class="btn" id="importBtn">导入</button>
+      </div>
+      <button class="btn primary" id="addBtn">＋ 新增菜品</button>
+    </div>
+
+    <div class="list" id="list"><div class="empty-note">载入中…</div></div>
+  </main>
+</div>
+
+<div class="veil"></div>
+<div class="modal-wrap" id="modal" aria-hidden="true">
+  <div class="panel" id="panel"></div>
+</div>
+
+<input type="file" id="fileImg" accept="image/*" hidden>
+<input type="file" id="fileJson" accept=".js,.json,text/plain,application/json,text/javascript" hidden>
+
+<script type="module" src="js/admin.js"></script>
+</body>
+</html>
