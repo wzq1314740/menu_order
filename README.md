@@ -76,3 +76,5 @@
 
 **停止服务**
 重启电脑前先运行 `uninstall.bat` 取消开机自启；或在任务管理器里结束 `pythonw.exe`。
+
+## Github 链接：https://github.com/wzq1314740/menu_order.git
