@@ -1,0 +1,106 @@
+/* 桂亭 · 公共样式：颜色、字体、按钮、弹窗、toast */
+:root{
+  --green:#1C3B2E;        /* 墨绿：品牌主色 */
+  --green-2:#254A39;
+  --green-3:#12291F;      /* 深绿：侧栏底 */
+  --gold:#B08A4A;         /* 烫金 */
+  --gold-2:#C9A972;
+  --gold-ink:#8A6C36;     /* 金色文字 */
+  --paper:#F7F3E9;        /* 米白：正文底 */
+  --paper-2:#EFE7D6;
+  --card:#FFFDF7;
+  --ink:#23281F;
+  --ink-2:#5A6157;
+  --ink-3:#8C9284;
+  --red:#9B3A2E;
+  --line:rgba(35,40,31,.13);
+  --serif:"Songti SC","Source Han Serif SC","Noto Serif SC","STSong","SimSun",serif;
+  --sans:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;
+  --tap:44px;
+  --safe-t:env(safe-area-inset-top,0px);
+  --safe-b:env(safe-area-inset-bottom,0px);
+  --safe-l:env(safe-area-inset-left,0px);
+  --safe-r:env(safe-area-inset-right,0px);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html,body{margin:0;}
+body{font-family:var(--sans);color:var(--ink);background:var(--paper);-webkit-font-smoothing:antialiased;
+  -webkit-text-size-adjust:100%;text-size-adjust:100%;}
+button{font-family:inherit;color:inherit;background:none;border:none;padding:0;cursor:pointer;}
+button[disabled]{cursor:default;}
+input,select,textarea{font-family:inherit;color:var(--ink);}
+img{display:block;}
+[hidden]{display:none!important;}
+
+/* 按钮 */
+.btn-solid{
+  height:52px;padding:0 20px;border-radius:2px;background:var(--green);color:#F7F3E9;
+  font-family:var(--serif);font-size:15.5px;letter-spacing:.2em;text-indent:.2em;
+  transition:background .2s,opacity .2s;
+}
+.btn-solid:active{background:var(--green-3);}
+.btn-solid[disabled]{opacity:.35;}
+.btn-ghost{
+  height:46px;padding:0 16px;border:1px solid rgba(35,40,31,.22);border-radius:2px;
+  font-size:13px;letter-spacing:.12em;color:var(--ink-2);background:transparent;
+}
+.btn-ghost:active{background:rgba(35,40,31,.05);}
+.btn-ghost[disabled]{opacity:.4;}
+.icon-btn{width:var(--tap);height:var(--tap);display:inline-flex;align-items:center;justify-content:center;color:var(--ink-2);flex:0 0 auto;}
+.icon-btn svg{width:18px;height:18px;}
+
+/* 输入框 */
+.inp{width:100%;height:42px;padding:0 12px;border:1px solid rgba(35,40,31,.22);border-radius:2px;background:#fff;
+  font-size:14px;outline:none;-webkit-appearance:none;appearance:none;}
+.inp:focus{border-color:var(--gold);}
+textarea.inp{height:76px;padding:10px 12px;line-height:1.7;resize:vertical;}
+select.inp{background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%238C9284'/%3E%3C/svg%3E") no-repeat right 12px center;padding-right:30px;}
+
+/* 数量步进器 */
+.stepper{display:inline-flex;align-items:center;gap:2px;border:1px solid var(--line);border-radius:2px;background:#fff;}
+.stepper button{width:40px;height:40px;display:flex;align-items:center;justify-content:center;font-size:18px;color:var(--green);}
+.stepper button:active{background:rgba(28,59,46,.08);}
+.stepper .v{min-width:26px;text-align:center;font-size:14px;font-variant-numeric:tabular-nums;}
+
+/* 遮罩和弹窗：层级由 js/overlay.js 动态设置 */
+.veil{position:fixed;inset:0;background:rgba(18,41,31,.42);opacity:0;pointer-events:none;transition:opacity .28s;z-index:40;}
+.veil.show{opacity:1;pointer-events:auto;}
+.modal-wrap{position:fixed;inset:0;z-index:60;display:grid;place-items:center;
+  padding:calc(20px + var(--safe-t)) calc(20px + var(--safe-r)) calc(20px + var(--safe-b)) calc(20px + var(--safe-l));
+  opacity:0;pointer-events:none;transition:opacity .26s;}
+.modal-wrap.open{opacity:1;pointer-events:auto;}
+.modal{background:var(--paper);width:min(760px,100%);max-height:calc(100dvh - 40px);overflow:auto;
+  border-radius:3px;box-shadow:0 26px 70px rgba(18,41,31,.32);
+  transform:translateY(10px) scale(.99);transition:transform .28s;-webkit-overflow-scrolling:touch;}
+.modal-wrap.open .modal{transform:none;}
+
+/* 手机竖屏：弹窗从底部弹出 */
+@media (max-width:699px){
+  .modal-wrap{padding:calc(24px + var(--safe-t)) 0 0;place-items:end stretch;}
+  .modal{width:100%;max-height:calc(100dvh - 24px - var(--safe-t));border-radius:12px 12px 0 0;
+    transform:translateY(40px);padding-bottom:var(--safe-b);}
+}
+
+/* 空状态 */
+.empty{padding:60px 0;text-align:center;}
+.empty .mk{width:60px;height:60px;object-fit:contain;opacity:.22;margin:0 auto 14px;}
+.empty p{font-size:12.5px;letter-spacing:.1em;color:var(--ink-3);margin:0;line-height:1.9;}
+
+/* toast */
+.toast{position:fixed;left:50%;bottom:calc(40px + var(--safe-b));transform:translate(-50%,12px);z-index:200;
+  max-width:calc(100vw - 32px);min-height:46px;padding:10px 20px;border-radius:23px;display:flex;align-items:center;
+  background:rgba(18,41,31,.94);color:var(--paper);font-size:13px;letter-spacing:.06em;line-height:1.5;text-align:center;
+  opacity:0;pointer-events:none;transition:opacity .26s,transform .26s;}
+.toast.show{opacity:1;transform:translate(-50%,0);}
+.toast.err{background:rgba(120,40,30,.95);}
+/* 手机上提示放在顶部，避免挡住底部按钮 */
+@media (max-width:699px){
+  .toast{top:calc(12px + var(--safe-t));bottom:auto;transform:translate(-50%,-12px);}
+}
+
+/* 状态标签 */
+.st{display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:11px;font-size:11px;letter-spacing:.06em;white-space:nowrap;}
+.st-new{background:#B4442F;color:#fff;}
+.st-confirmed{background:rgba(176,138,74,.18);color:var(--gold-ink);}
+.st-done{background:rgba(28,59,46,.1);color:var(--green);}
+.st-cancelled{background:rgba(35,40,31,.08);color:var(--ink-3);text-decoration:line-through;}

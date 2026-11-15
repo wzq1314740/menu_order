@@ -1,0 +1,102 @@
+/* 桂亭 · 订单看板 */
+body{min-height:100vh;min-height:100dvh;}
+a{color:inherit;text-decoration:none;}
+
+.top{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:10px;
+  min-height:calc(58px + var(--safe-t));padding:var(--safe-t) calc(20px + var(--safe-r)) 0 calc(20px + var(--safe-l));
+  background:var(--green-3);color:#F3E9D6;}
+.top .logo{width:30px;height:30px;object-fit:contain;}
+.top .ttl{font-family:var(--serif);font-size:17px;letter-spacing:.2em;}
+.top .sub{font-size:10.5px;letter-spacing:.12em;color:rgba(243,233,214,.55);}
+.top .sp{flex:1 1 auto;}
+.tbtn{display:inline-flex;align-items:center;height:36px;padding:0 14px;border:1px solid rgba(201,169,114,.5);border-radius:2px;
+  font-size:12.5px;letter-spacing:.08em;color:#F3E9D6;white-space:nowrap;}
+.tbtn:active{background:rgba(201,169,114,.16);}
+.tbtn.on{background:var(--gold);border-color:var(--gold);color:#12291F;font-weight:600;}
+.conn{font-size:12px;color:#F2B8A8;letter-spacing:.06em;}
+
+.bar{position:sticky;top:calc(58px + var(--safe-t));z-index:20;display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+  padding:10px calc(20px + var(--safe-r)) 10px calc(20px + var(--safe-l));background:var(--paper);border-bottom:1px solid var(--line);}
+.bar .sp{flex:1 1 auto;}
+.tabs{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;}
+.tabs::-webkit-scrollbar{display:none;}
+.tabs button{flex:0 0 auto;height:40px;padding:0 14px;border-radius:20px;font-size:13px;letter-spacing:.08em;color:var(--ink-2);
+  display:inline-flex;align-items:center;gap:6px;}
+.tabs button em{font-style:normal;font-size:11px;color:var(--ink-3);font-variant-numeric:tabular-nums;}
+.tabs button.on{background:var(--green);color:#F3E9D6;}
+.tabs button.on em{color:rgba(243,233,214,.7);}
+.tabs button[data-st="new"] em.hot{display:inline-flex;min-width:20px;height:20px;padding:0 5px;border-radius:10px;
+  background:#B4442F;color:#fff;align-items:center;justify-content:center;}
+.filters{display:flex;gap:8px;align-items:center;}
+.filters .inp{height:40px;width:auto;min-width:130px;font-size:13px;}
+.seg{display:inline-flex;border:1px solid rgba(35,40,31,.22);border-radius:2px;overflow:hidden;}
+.seg button{height:38px;padding:0 12px;font-size:12.5px;letter-spacing:.06em;color:var(--ink-2);background:#fff;}
+.seg button.on{background:var(--green);color:#F3E9D6;}
+
+.board{padding:16px calc(20px + var(--safe-r)) calc(40px + var(--safe-b)) calc(20px + var(--safe-l));
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:16px;align-items:start;}
+.board > .empty{grid-column:1/-1;}
+
+.card{background:var(--card);border:1px solid rgba(35,40,31,.1);border-radius:3px;display:flex;flex-direction:column;
+  box-shadow:0 2px 10px rgba(18,41,31,.04);transition:box-shadow .3s,border-color .3s;}
+.card.s-new{border-color:rgba(180,68,47,.45);}
+.card.fresh{animation:fresh 1.2s ease-in-out 3;box-shadow:0 0 0 3px rgba(180,68,47,.25);}
+@keyframes fresh{50%{box-shadow:0 0 0 6px rgba(180,68,47,.35);}}
+.card.s-cancelled{opacity:.6;}
+.c-head{display:flex;align-items:center;gap:10px;padding:12px 14px 10px;border-bottom:1px solid var(--line);}
+.c-table{font-family:var(--serif);font-size:19px;letter-spacing:.08em;}
+.c-area{font-size:11px;color:var(--ink-3);letter-spacing:.08em;}
+.c-head .st{margin-left:auto;}
+.c-meta{display:flex;flex-wrap:wrap;gap:4px 14px;padding:8px 14px 0;font-size:12px;color:var(--ink-2);letter-spacing:.04em;}
+.c-meta b{font-weight:600;color:var(--ink);font-variant-numeric:tabular-nums;}
+.c-items{padding:6px 14px 8px;}
+.c-cat{font-family:var(--serif);font-size:11px;letter-spacing:.2em;color:var(--gold);margin:8px 0 2px;}
+.c-it{display:flex;align-items:baseline;gap:8px;padding:4px 0;border-bottom:1px dashed rgba(35,40,31,.08);}
+.c-it:last-child{border-bottom:none;}
+.c-it .nm{font-family:var(--serif);font-size:15.5px;letter-spacing:.05em;line-height:1.4;}
+.c-it .cm{font-size:11.5px;color:var(--gold-ink);margin-left:6px;}
+.c-it .q{margin-left:auto;font-size:15px;font-weight:600;color:var(--green);white-space:nowrap;font-variant-numeric:tabular-nums;}
+.c-note{margin:0 14px 10px;padding:8px 10px;background:rgba(176,138,74,.09);border-radius:2px;font-size:12.5px;line-height:1.7;color:var(--gold-ink);}
+.c-foot{display:flex;gap:8px;padding:10px 14px 12px;border-top:1px solid var(--line);margin-top:auto;flex-wrap:wrap;}
+.c-foot button{flex:1 1 auto;height:42px;padding:0 12px;border-radius:2px;font-size:13px;letter-spacing:.1em;
+  border:1px solid rgba(35,40,31,.2);color:var(--ink-2);background:#fff;white-space:nowrap;}
+.c-foot button.pri{background:var(--green);border-color:var(--green);color:#F7F3E9;}
+.c-foot button.warn{color:var(--red);border-color:rgba(155,58,46,.3);flex:0 0 auto;}
+.c-foot button.mini{flex:0 0 auto;}
+.c-foot button[disabled]{opacity:.5;}
+.c-sum{padding:0 14px 10px;font-size:11.5px;color:var(--ink-3);letter-spacing:.04em;}
+
+/* 打印：只输出当前这一单 */
+#printArea{display:none;}
+@media print{
+  body.printing > *:not(#printArea){display:none!important;}
+  body.printing #printArea{display:block;font-family:var(--sans);color:#000;}
+  #printArea h1{font-size:18px;margin:0 0 4px;}
+  #printArea .pm{font-size:12px;margin-bottom:8px;}
+  #printArea table{width:100%;border-collapse:collapse;font-size:14px;}
+  #printArea td{padding:4px 0;border-bottom:1px dashed #999;}
+  #printArea td.q{text-align:right;white-space:nowrap;}
+  #printArea .pn{margin-top:8px;font-size:12px;}
+  @page{margin:8mm;}
+}
+
+/* iPad 竖屏 */
+@media (max-width:1023px){
+  .board{grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;}
+}
+/* 手机 */
+@media (max-width:699px){
+  .top{padding-left:calc(12px + var(--safe-l));padding-right:calc(12px + var(--safe-r));gap:6px;min-height:calc(52px + var(--safe-t));}
+  .top .sub{display:none;}
+  .top .ttl{font-size:15px;letter-spacing:.12em;}
+  .tbtn{height:34px;padding:0 9px;font-size:12px;}
+  .conn{position:fixed;left:0;right:0;top:calc(52px + var(--safe-t));padding:6px;text-align:center;background:#7A2E22;color:#fff;}
+  .bar{top:calc(52px + var(--safe-t));padding:8px 12px;gap:8px;}
+  .tabs{width:100%;}
+  .tabs button{height:36px;padding:0 11px;font-size:12.5px;}
+  .filters{width:100%;flex-wrap:wrap;}
+  .filters .inp{flex:1 1 140px;min-width:0;}
+  .seg{flex:1 1 100%;}
+  .seg button{flex:1 1 0;}
+  .board{grid-template-columns:1fr;padding:12px calc(12px + var(--safe-r)) calc(30px + var(--safe-b)) calc(12px + var(--safe-l));}
+}
